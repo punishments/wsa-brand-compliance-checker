@@ -388,6 +388,204 @@
                 padding: 10px;
             }
         }
+
+/* Glossary Styles */
+.glossary-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.glossary-toggle:hover {
+    background: linear-gradient(135deg, #8e44ad, #7d3c98);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+}
+
+.glossary-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    display: none;
+    backdrop-filter: blur(5px);
+}
+
+.glossary-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1000px;
+    height: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 1002;
+    display: none;
+    overflow: hidden;
+}
+
+.glossary-header {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.glossary-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.glossary-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.glossary-content {
+    height: calc(100% - 80px);
+    overflow-y: auto;
+    padding: 30px;
+}
+
+.glossary-brand {
+    margin-bottom: 40px;
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.glossary-brand-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 15px 20px;
+    border-bottom: 1px solid #ecf0f1;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.glossary-brand-header:hover {
+    background: linear-gradient(135deg, #e9ecef, #dee2e6);
+}
+
+.glossary-brand-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+.glossary-brand-toggle {
+    font-size: 18px;
+    color: #7f8c8d;
+    transition: transform 0.3s ease;
+}
+
+.glossary-brand-content {
+    padding: 20px;
+    display: none;
+}
+
+.glossary-brand-content.active {
+    display: block;
+}
+
+.glossary-brand-header.active .glossary-brand-toggle {
+    transform: rotate(180deg);
+}
+
+.glossary-category {
+    margin-bottom: 25px;
+}
+
+.glossary-category h4 {
+    color: #3498db;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-transform: capitalize;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 5px;
+}
+
+.glossary-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.glossary-item {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    border-left: 3px solid #3498db;
+}
+
+.glossary-item .correct {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.glossary-item .name {
+    color: #7f8c8d;
+}
+
+.glossary-search {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.glossary-search:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+@media (max-width: 768px) {
+    .glossary-modal {
+        width: 95%;
+        height: 90%;
+    }
+    
+    .glossary-content {
+        padding: 20px;
+    }
+    
+    .glossary-items {
+        grid-template-columns: 1fr;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -463,7 +661,7 @@
     </div>
     
     <footer class="footer">
-        <p>Brand Compliance Checker v2.1.0</p>
+        <p>Brand Compliance Checker v2.5.3</p>
         <p>Last Updated: <span id="lastModified"></span></p>
         <p>&copy; 2025 WS Audiology. All rights reserved.</p>
     </footer>
@@ -581,6 +779,8 @@
                     { name: 'Widex Magnify', correct: 'Widex Magnify' },
                     { name: 'Magnify', correct: 'Magnify' },
                     { name: 'Widex Evoke', correct: 'Widex Evoke™' },
+                    { name: 'Evoke', correct: 'Evoke™' },
+                    { name: 'Widex Allure', correct: 'Widex Allure™' },
                     { name: 'Evoke', correct: 'Evoke™' }
                 ],
                 features: [
@@ -841,59 +1041,92 @@
                 });
             }
             
-            isHeader(line, lineIndex, lines) {
-                const trimmedLine = line.trim();
-                if (!trimmedLine) return false;
-                
-                // Check word count (headers typically have fewer words)
-                const wordCount = trimmedLine.split(/\s+/).length;
-                if (wordCount > 10) return false;
-                
-                // Check if surrounded by blank lines
-                const prevLine = lineIndex > 0 ? lines[lineIndex - 1].trim() : '';
-                const nextLine = lineIndex < lines.length - 1 ? lines[lineIndex + 1].trim() : '';
-                const surroundedByBlankLines = (!prevLine || !nextLine);
-                
-                // Check if entirely uppercase or title case
-                const isUpperCase = trimmedLine === trimmedLine.toUpperCase();
-                const isTitleCase = trimmedLine === trimmedLine.replace(/\w\S*/g, (txt) => 
-                    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                );
-                
-                return surroundedByBlankLines && (isUpperCase || isTitleCase);
-            }
+isHeader(line, lineIndex, lines) {
+    const trimmedLine = line.trim();
+    if (!trimmedLine) return false;
+    
+    // PRIMARY CHECK: Word count (headers typically have fewer words)
+    const words = trimmedLine.split(/\s+/).filter(word => word.length > 0);
+    const wordCount = words.length;
+    
+    // Headers are typically 12 words or fewer
+    if (wordCount > 12) return false;
+    
+    // Additional header indicators
+    const hasEmojis = /[\u{1F300}-\u{1F9FF}]/u.test(trimmedLine);
+    const hasExclamation = trimmedLine.includes('!');
+    const isAllCaps = trimmedLine === trimmedLine.toUpperCase();
+    const startsWithHeading = /^heading:/i.test(trimmedLine);
+    
+    // Check if surrounded by blank lines
+    const prevLine = lineIndex > 0 ? lines[lineIndex - 1].trim() : '';
+    const nextLine = lineIndex < lines.length - 1 ? lines[lineIndex + 1].trim() : '';
+    const surroundedByBlankLines = (!prevLine || !nextLine);
+    
+    // Enhanced header detection based on word count and characteristics
+    const isLikelyHeader = 
+        (wordCount <= 8) || // Very short lines are likely headers
+        (wordCount <= 12 && (
+            surroundedByBlankLines || 
+            hasEmojis || 
+            hasExclamation ||
+            isAllCaps ||
+            startsWithHeading ||
+            this.isTitleCase(trimmedLine)
+        ));
+    
+    return isLikelyHeader;
+}
+
+// Helper function for better title case detection
+isTitleCase(text) {
+    // Remove emojis and special characters for title case check
+    const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}!:]/gu, '').trim();
+    if (!cleanText) return false;
+    
+    const words = cleanText.split(/\s+/).filter(word => word.length > 0);
+    if (words.length === 0) return false;
+    
+    return words.every(word => {
+        if (word.length === 0) return true;
+        return word.charAt(0) === word.charAt(0).toUpperCase();
+    });
+}
+
+
             
-            analyzeContent() {
-                const textArea = document.getElementById('textArea');
-                const text = textArea.value.trim();
-                
-                if (!text) {
-                    alert('Please upload a file or enter text to analyze.');
-                    return;
-                }
-                
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
-                if (!isAnyChecked) {
-                    alert('Please select at least one brand to validate against.');
-                    return;
-                }
-                
-                this.originalText = text;
-                this.correctedText = text;
-                this.issues = [];
-                this.firstMentions = new Set();
-                this.requiredDisclosures = new Set();
-                
-                // Apply corrections in specific order
-                this.applyCommonTerminologyFixes();
-                this.applyDisclosureRules();
-                this.applyBrandSpecificRules();
-                this.applyStyleCorrections();
-                this.applyPhoneNumberFormatting();
-                
-                this.displayResults();
-            }
+analyzeContent() {
+    const textArea = document.getElementById('textArea');
+    const text = textArea.value.trim();
+    
+    if (!text) {
+        alert('Please upload a file or enter text to analyze.');
+        return;
+    }
+    
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    if (!isAnyChecked) {
+        alert('Please select at least one brand to validate against.');
+        return;
+    }
+    
+    this.originalText = text;
+    this.correctedText = text;
+    this.issues = [];
+    this.firstMentions = new Set();
+    this.requiredDisclosures = new Set();
+    // REMOVED: this.trackedCorrections = new Set();
+    
+    // Apply corrections in specific order
+    this.applyCommonTerminologyFixes();
+    this.applyDisclosureRules();
+    this.applyBrandSpecificRules();
+    this.applyStyleCorrections();
+    this.applyPhoneNumberFormatting();
+    
+    this.displayResults();
+}
             
             applyCommonTerminologyFixes() {
                 // Fix common terminology
@@ -1054,54 +1287,66 @@
                 });
             }
             
-            processProductName(product, brand) {
-                const baseName = product.name;
-                const correctName = product.correct;
-                const baseNameLower = baseName.toLowerCase();
-                
-                // CRITICAL FIX: Only process if the term doesn't already have the correct trademark
-                if (!this.firstMentions.has(baseNameLower)) {
-                    const escapedBaseName = this.escapeRegex(baseName);
-                    // FIXED: Negative lookahead to prevent matching already-correct terms
-                    const regex = new RegExp(`\\b${escapedBaseName}\\b(?![™®])`, 'i');
-                    
-                    const lines = this.correctedText.split('\n');
-                    let found = false;
-                    
-                    for (let i = 0; i < lines.length; i++) {
-                        const line = lines[i];
-                        if (this.isHeader(line, i, lines)) continue; // Skip headers
-                        
-                        // ADDITIONAL CHECK: Don't process if the line already contains the correct format
-                        if (line.includes(correctName)) {
-                            this.firstMentions.add(baseNameLower);
-                            continue;
-                        }
-                        
-                        if (line.match(regex)) {
-                            lines[i] = line.replace(regex, correctName);
-                            this.firstMentions.add(baseNameLower);
-                            found = true;
-                            break;
-                        }
-                    }
-                    
-                    if (found) {
-                        this.correctedText = lines.join('\n');
-                        
-                        // Track issue for display
-                        const originalMatch = this.originalText.match(regex);
-                        if (originalMatch) {
-                            const position = this.originalText.search(regex);
-                            if (position !== -1) {
-                                this.addIssue(position, originalMatch[0], correctName, 'trademark', 
-                                    `Add trademark symbol: "${originalMatch[0]}" → "${correctName}"`);
-                            }
-                        }
-                    }
-                }
+processProductName(product, brand) {
+    const baseName = product.name;
+    const correctName = product.correct;
+    const baseNameLower = baseName.toLowerCase();
+    
+    // Only process if we haven't seen this term before
+    if (!this.firstMentions.has(baseNameLower)) {
+        const escapedBaseName = this.escapeRegex(baseName);
+        const regex = new RegExp(`\\b${escapedBaseName}\\b(?![™®])`, 'i');
+        
+        // FIXED: Process line by line to skip headers
+        const lines = this.correctedText.split('\n');
+        let foundFirstBodyMention = false;
+        let issuePosition = -1;
+        let originalMatch = '';
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            
+            // Skip if this line is a header
+            if (this.isHeader(line, i, lines)) {
+                continue;
             }
             
+            // Look for the term in non-header lines only
+            const match = line.match(regex);
+            if (match && !foundFirstBodyMention) {
+                // Replace only this first body text occurrence
+                lines[i] = line.replace(regex, correctName);
+                foundFirstBodyMention = true;
+                
+                // Calculate position in original text for issue tracking
+                const linesBeforeMatch = this.originalText.split('\n').slice(0, i);
+                const textBeforeMatch = linesBeforeMatch.join('\n') + (i > 0 ? '\n' : '');
+                issuePosition = textBeforeMatch.length + line.indexOf(match[0]);
+                originalMatch = match[0];
+                
+                break; // Stop after first body text match
+            }
+        }
+        
+        if (foundFirstBodyMention) {
+            this.correctedText = lines.join('\n');
+            this.firstMentions.add(baseNameLower);
+            
+            // Track the issue
+            if (issuePosition !== -1) {
+                this.addIssue(
+                    issuePosition, 
+                    originalMatch, 
+                    correctName, 
+                    'trademark', 
+                    `Add trademark symbol: "${originalMatch}" → "${correctName}"`
+                );
+            }
+        }
+    }
+}
+
+         
             applyStyleCorrections() {
                 commonTerms.styles.forEach(style => {
                     const regex = new RegExp(`\\b${this.escapeRegex(style.toLowerCase())}\\b`, 'gi');
@@ -1135,15 +1380,16 @@
                 return brands;
             }
             
-            addIssue(position, original, corrected, type, description) {
-                this.issues.push({
-                    position,
-                    original,
-                    corrected,
-                    type,
-                    description
-                });
-            }
+addIssue(position, original, corrected, type, description) {
+    this.issues.push({
+        position,
+        original,
+        corrected,
+        type,
+        description
+    });
+}
+
             
             displayResults() {
                 const resultsSection = document.getElementById('resultsSection');
@@ -1310,6 +1556,330 @@
         document.addEventListener('DOMContentLoaded', () => {
             new BrandComplianceChecker();
         });
+
+// Fixed Glossary functionality with working search
+class GlossaryManager {
+    constructor() {
+        this.initializeGlossary();
+    }
+    
+    initializeGlossary() {
+        const toggleBtn = document.getElementById('glossaryToggle');
+        const overlay = document.getElementById('glossaryOverlay');
+        const modal = document.getElementById('glossaryModal');
+        const closeBtn = document.getElementById('glossaryClose');
+        const searchInput = document.getElementById('glossarySearch');
+        
+        toggleBtn.addEventListener('click', () => this.showGlossary());
+        closeBtn.addEventListener('click', () => this.hideGlossary());
+        overlay.addEventListener('click', () => this.hideGlossary());
+        
+        // FIXED: Add debounced search for better performance
+        searchInput.addEventListener('input', this.debounce((e) => {
+            this.filterGlossary(e.target.value);
+        }, 300));
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                this.hideGlossary();
+            }
+        });
+    }
+    
+    // FIXED: Add debounce function for search performance
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    showGlossary() {
+        this.generateGlossaryContent();
+        document.getElementById('glossaryOverlay').style.display = 'block';
+        document.getElementById('glossaryModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Clear search on show
+        document.getElementById('glossarySearch').value = '';
+    }
+    
+    hideGlossary() {
+        document.getElementById('glossaryOverlay').style.display = 'none';
+        document.getElementById('glossaryModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    generateGlossaryContent() {
+        const container = document.getElementById('glossaryContainer');
+        container.innerHTML = '';
+        
+        // Generate content from brandRules JSON
+        Object.entries(brandRules).forEach(([brandName, brandData]) => {
+            const brandSection = this.createBrandSection(brandName, brandData);
+            container.appendChild(brandSection);
+        });
+        
+        // Add common terms section
+        const commonSection = this.createCommonTermsSection();
+        container.appendChild(commonSection);
+    }
+    
+    createBrandSection(brandName, brandData) {
+        const section = document.createElement('div');
+        section.className = 'glossary-brand';
+        section.setAttribute('data-brand', brandName);
+        
+        const header = document.createElement('div');
+        header.className = 'glossary-brand-header';
+        header.innerHTML = `
+            <h3>${brandName.charAt(0).toUpperCase() + brandName.slice(1)} Nomenclature</h3>
+            <span class="glossary-brand-toggle">▼</span>
+        `;
+        
+        const content = document.createElement('div');
+        content.className = 'glossary-brand-content';
+        
+        // Add categories dynamically from JSON
+        Object.entries(brandData).forEach(([categoryName, items]) => {
+            if (Array.isArray(items) && items.length > 0) {
+                const category = this.createCategory(categoryName, items);
+                content.appendChild(category);
+            } else if (categoryName === 'phoneFormat' || categoryName === 'disclosure') {
+                const category = this.createInfoCategory(categoryName, items);
+                content.appendChild(category);
+            }
+        });
+        
+        header.addEventListener('click', () => {
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        });
+        
+        section.appendChild(header);
+        section.appendChild(content);
+        
+        return section;
+    }
+    
+    createCategory(categoryName, items) {
+        const category = document.createElement('div');
+        category.className = 'glossary-category';
+        category.setAttribute('data-category', categoryName);
+        
+        const title = document.createElement('h4');
+        title.textContent = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+        
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'glossary-items';
+        
+        items.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'glossary-item';
+            
+            // FIXED: Properly set searchable data for all item types
+            let searchableText = '';
+            let displayHTML = '';
+            
+            if (item.name && item.correct) {
+                searchableText = `${item.name} ${item.correct}`.toLowerCase();
+                displayHTML = `
+                    <span class="name">${item.name}</span> → 
+                    <span class="correct">${item.correct}</span>
+                `;
+            } else if (typeof item === 'string') {
+                searchableText = item.toLowerCase();
+                displayHTML = `<span class="correct">${item}</span>`;
+            }
+            
+            // CRITICAL FIX: Set data-searchable attribute correctly
+            itemElement.setAttribute('data-searchable', searchableText);
+            itemElement.innerHTML = displayHTML;
+            
+            itemsContainer.appendChild(itemElement);
+        });
+        
+        category.appendChild(title);
+        category.appendChild(itemsContainer);
+        
+        return category;
+    }
+    
+    createInfoCategory(categoryName, value) {
+        const category = document.createElement('div');
+        category.className = 'glossary-category';
+        
+        const title = document.createElement('h4');
+        title.textContent = categoryName === 'phoneFormat' ? 'Phone Format' : 'Disclosure';
+        
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'glossary-items';
+        
+        const itemElement = document.createElement('div');
+        itemElement.className = 'glossary-item';
+        // FIXED: Add searchable data for info items too
+        itemElement.setAttribute('data-searchable', value.toLowerCase());
+        itemElement.innerHTML = `<span class="correct">${value}</span>`;
+        
+        itemsContainer.appendChild(itemElement);
+        category.appendChild(title);
+        category.appendChild(itemsContainer);
+        
+        return category;
+    }
+    
+    createCommonTermsSection() {
+        const section = document.createElement('div');
+        section.className = 'glossary-brand';
+        section.setAttribute('data-brand', 'common');
+        
+        const header = document.createElement('div');
+        header.className = 'glossary-brand-header';
+        header.innerHTML = `
+            <h3>Common Terms & Guidelines</h3>
+            <span class="glossary-brand-toggle">▼</span>
+        `;
+        
+        const content = document.createElement('div');
+        content.className = 'glossary-brand-content';
+        
+        // Add common terms from commonTerms JSON
+        Object.entries(commonTerms).forEach(([categoryName, items]) => {
+            if (categoryName !== 'disclosures') {
+                const category = this.createCommonCategory(categoryName, items);
+                content.appendChild(category);
+            }
+        });
+        
+        header.addEventListener('click', () => {
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        });
+        
+        section.appendChild(header);
+        section.appendChild(content);
+        
+        return section;
+    }
+    
+    createCommonCategory(categoryName, items) {
+        const category = document.createElement('div');
+        category.className = 'glossary-category';
+        
+        const title = document.createElement('h4');
+        title.textContent = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+        
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'glossary-items';
+        
+        if (Array.isArray(items)) {
+            items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'glossary-item';
+                // FIXED: Add searchable data for array items
+                itemElement.setAttribute('data-searchable', item.toLowerCase());
+                itemElement.innerHTML = `<span class="correct">${item}</span>`;
+                itemsContainer.appendChild(itemElement);
+            });
+        } else if (typeof items === 'object') {
+            Object.entries(items).forEach(([key, value]) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'glossary-item';
+                // FIXED: Properly set searchable data for object entries
+                itemElement.setAttribute('data-searchable', `${key} ${value}`.toLowerCase());
+                itemElement.innerHTML = `
+                    <span class="name">${key}</span> → 
+                    <span class="correct">${value}</span>
+                `;
+                itemsContainer.appendChild(itemElement);
+            });
+        }
+        
+        category.appendChild(title);
+        category.appendChild(itemsContainer);
+        
+        return category;
+    }
+    
+    // COMPLETELY REWRITTEN: Fixed search functionality
+    filterGlossary(searchTerm) {
+        const searchLower = searchTerm.toLowerCase().trim();
+        
+        // Get all elements
+        const items = document.querySelectorAll('.glossary-item');
+        const categories = document.querySelectorAll('.glossary-category');
+        const brands = document.querySelectorAll('.glossary-brand');
+        
+        if (!searchLower) {
+            // Show all items when search is empty
+            items.forEach(item => item.style.display = 'block');
+            categories.forEach(category => category.style.display = 'block');
+            brands.forEach(brand => brand.style.display = 'block');
+            return;
+        }
+        
+        // Filter items
+        items.forEach(item => {
+            const searchableText = item.getAttribute('data-searchable') || '';
+            const isVisible = searchableText.includes(searchLower);
+            item.style.display = isVisible ? 'block' : 'none';
+        });
+        
+        // Show/hide categories based on visible items
+        categories.forEach(category => {
+            const visibleItems = category.querySelectorAll('.glossary-item[style*="block"], .glossary-item:not([style*="none"])');
+            const hasVisibleItems = Array.from(visibleItems).some(item => 
+                item.style.display !== 'none'
+            );
+            category.style.display = hasVisibleItems ? 'block' : 'none';
+        });
+        
+        // Show/hide brands based on visible categories
+        brands.forEach(brand => {
+            const visibleCategories = brand.querySelectorAll('.glossary-category[style*="block"], .glossary-category:not([style*="none"])');
+            const hasVisibleCategories = Array.from(visibleCategories).some(category => 
+                category.style.display !== 'none'
+            );
+            brand.style.display = hasVisibleCategories ? 'block' : 'none';
+            
+            // Auto-expand brands with search results
+            if (hasVisibleCategories && searchLower) {
+                const header = brand.querySelector('.glossary-brand-header');
+                const content = brand.querySelector('.glossary-brand-content');
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        });
+    }
+}
+
+// Initialize glossary when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new GlossaryManager();
+});
+
     </script>
+<!-- Glossary Toggle Button -->
+<button class="glossary-toggle" id="glossaryToggle">📚 Glossary</button>
+
+<!-- Glossary Modal -->
+<div class="glossary-overlay" id="glossaryOverlay"></div>
+<div class="glossary-modal" id="glossaryModal">
+    <div class="glossary-header">
+        <h2>📚 Brand Nomenclature Glossary</h2>
+        <button class="glossary-close" id="glossaryClose">×</button>
+    </div>
+    <div class="glossary-content">
+        <input type="text" class="glossary-search" id="glossarySearch" placeholder="🔍 Search terms, products, or features...">
+        <div id="glossaryContainer"></div>
+    </div>
+</div>
+
 </body>
 </html>
