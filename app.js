@@ -604,6 +604,7 @@ processProductName(product, brand) {
                     });
                 });
             }
+
             
             getSelectedBrands() {
                 const brands = [];
