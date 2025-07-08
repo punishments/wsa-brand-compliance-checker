@@ -1132,12 +1132,34 @@ analyzeContent() {
                 // Fix common terminology
                 Object.entries(commonTerms.replacements).forEach(([incorrect, correct]) => {
                     const regex = new RegExp(`\\b${this.escapeRegex(incorrect)}\\b`, 'gi');
+                    let match;
+                    while ((match = regex.exec(this.originalText)) !== null) {
+                        if (match[0].toLowerCase() === correct.toLowerCase()) continue;
+                        this.addIssue(
+                            match.index,
+                            match[0],
+                            correct,
+                            'terminology',
+                            `Replace with brand terminology: "${match[0]}" → "${correct}"`
+                        );
+                    }
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
-                
+
                 // Fix capitalization
                 Object.entries(commonTerms.capitalizations).forEach(([incorrect, correct]) => {
                     const regex = new RegExp(`\\b${this.escapeRegex(incorrect)}\\b`, 'gi');
+                    let match;
+                    while ((match = regex.exec(this.originalText)) !== null) {
+                        if (match[0] === correct) continue;
+                        this.addIssue(
+                            match.index,
+                            match[0],
+                            correct,
+                            'capitalization',
+                            `Fix capitalization: "${match[0]}" → "${correct}"`
+                        );
+                    }
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
             }
@@ -1349,12 +1371,32 @@ processProductName(product, brand) {
          
             applyStyleCorrections() {
                 commonTerms.styles.forEach(style => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(style.toLowerCase())}\\b`, 'gi');
+                    const regex = new RegExp(`\\b${this.escapeRegex(style.toLowerCase())}\\b`, 'g');
+                    let match;
+                    while ((match = regex.exec(this.originalText)) !== null) {
+                        this.addIssue(
+                            match.index,
+                            match[0],
+                            style,
+                            'capitalization',
+                            `Fix capitalization: "${match[0]}" → "${style}"`
+                        );
+                    }
                     this.correctedText = this.correctedText.replace(regex, style);
                 });
-                
+
                 // Fix app to lowercase when used generically
                 const appRegex = /\bApp\b(?!\s+Store)/g;
+                let appMatch;
+                while ((appMatch = appRegex.exec(this.originalText)) !== null) {
+                    this.addIssue(
+                        appMatch.index,
+                        appMatch[0],
+                        'app',
+                        'terminology',
+                        `Use lowercase: "${appMatch[0]}" → "app"`
+                    );
+                }
                 this.correctedText = this.correctedText.replace(appRegex, 'app');
             }
             
