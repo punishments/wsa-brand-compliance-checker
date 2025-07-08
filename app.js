@@ -327,9 +327,9 @@ analyzeContent() {
                 
                 // Process Android LAST (with ™ symbol)
                 this.processAndroidTerms();
-                
-                // Process Bluetooth
-                this.processBluetoothTerms();
+
+                // Process trademarks from JSON (e.g., Bluetooth)
+                this.processTrademarkTerms();
             }
             
             processAppleTerms() {
@@ -410,21 +410,47 @@ analyzeContent() {
                 });
             }
             
-            processBluetoothTerms() {
-                // FIXED: Only match terms WITHOUT existing trademark symbols
-                const bluetoothVariants = ['bluetooth', 'Bluetooth', 'BLUETOOTH'];
-                let isFirstMention = !this.firstMentions.has('bluetooth');
-                
-                bluetoothVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Bluetooth®');
-                        this.firstMentions.add('bluetooth');
-                        this.requiredDisclosures.add('bluetooth');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Bluetooth');
+            processTrademarkTerms() {
+                const trademarks = commonTerms.trademarks || {};
+
+                Object.entries(trademarks).forEach(([term, correct]) => {
+                    const termLower = term.toLowerCase();
+                    let isFirstMention = !this.firstMentions.has(termLower);
+
+                    const lines = this.correctedText.split('\n');
+                    let issuePos = -1;
+                    let originalMatch = '';
+
+                    for (let i = 0; i < lines.length; i++) {
+                        let line = lines[i];
+                        const regex = new RegExp(`\\b${this.escapeRegex(term)}\\b(?![™®])`, 'i');
+
+                        if (this.isHeader(line, i, lines)) {
+                            line = line.replace(regex, term);
+                            lines[i] = line;
+                            continue;
+                        }
+
+                        const match = line.match(regex);
+                        if (match && isFirstMention) {
+                            lines[i] = line.replace(regex, correct);
+                            const linesBefore = this.originalText.split('\n').slice(0, i);
+                            const textBefore = linesBefore.join('\n') + (i > 0 ? '\n' : '');
+                            issuePos = textBefore.length + line.indexOf(match[0]);
+                            originalMatch = match[0];
+                            isFirstMention = false;
+                            this.firstMentions.add(termLower);
+                            this.requiredDisclosures.add(termLower);
+                            continue;
+                        }
+
+                        lines[i] = line.replace(regex, term);
+                    }
+
+                    this.correctedText = lines.join('\n');
+
+                    if (issuePos !== -1) {
+                        this.addIssue(issuePos, originalMatch, correct, 'trademark', `Add trademark symbol: "${originalMatch}" → "${correct}"`);
                     }
                 });
             }
@@ -525,9 +551,11 @@ processProductName(product, brand) {
          
             applyStyleCorrections() {
                 commonTerms.styles.forEach(style => {
-                    const regex = new RegExp(`\b${this.escapeRegex(style.toLowerCase())}\b`, 'gi');
+                    const regex = new RegExp(`\\b${this.escapeRegex(style.toLowerCase())}\\b`, 'gi');
                     for (const match of this.originalText.matchAll(regex)) {
-                        this.addIssue(match.index, match[0], style, 'terminology', `Use "${style}" style`);
+                        if (match[0] !== style) {
+                            this.addIssue(match.index, match[0], style, 'terminology', `Use "${style}" style`);
+                        }
                     }
                     this.correctedText = this.correctedText.replace(regex, style);
                 });
@@ -540,14 +568,29 @@ processProductName(product, brand) {
                 this.correctedText = this.correctedText.replace(appRegex, 'app');
             }
             applyPhoneNumberFormatting() {
+                const selectedBrands = this.getSelectedBrands();
+                if (selectedBrands.length === 0) return;
+
                 selectedBrands.forEach(brand => {
                     const rules = brandRules[brand];
-                    if (rules.phoneFormat) {
-                        // This is a simplified phone number correction
-                        // In a real implementation, you'd want more sophisticated phone number detection
-                        const phoneRegex = /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g;
-                        // For demo purposes, we'll just flag phone numbers that don't match the expected format
+                    if (!rules.phoneFormat) return;
+
+                    const digitsExpected = rules.phoneFormat.replace(/\D/g, '');
+                    const genericRegex = digitsExpected.length === 11
+                        ? /\b1[-.\s]?\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g
+                        : /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g;
+
+                    for (const match of this.originalText.matchAll(genericRegex)) {
+                        const digitsFound = match[0].replace(/\D/g, '');
+                        if (digitsFound === digitsExpected && match[0] !== rules.phoneFormat) {
+                            this.addIssue(match.index, match[0], rules.phoneFormat, 'terminology', `Format phone as ${rules.phoneFormat}`);
+                        }
                     }
+
+                    this.correctedText = this.correctedText.replace(genericRegex, m => {
+                        const digitsFound = m.replace(/\D/g, '');
+                        return digitsFound === digitsExpected ? rules.phoneFormat : m;
+                    });
                 });
             }
             

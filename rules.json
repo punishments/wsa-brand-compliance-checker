@@ -24,6 +24,16 @@
         { "name": "Intuis 3 P", "correct": "Intuis™ 3 P" },
         { "name": "Intuis 3 S", "correct": "Intuis™ 3 S" },
         { "name": "Intuis 3 SP", "correct": "Intuis™ 3 SP" },
+        { "name": "Intius 3 CIC", "correct": "Intuis™ 3 CIC" },
+        { "name": "Intius 3 ITC", "correct": "Intuis™ 3 ITC" },
+        { "name": "Intius 3 ITE", "correct": "Intuis™ 3 ITE" },
+        { "name": "Intius 3 Click CIC", "correct": "Intuis™ 3 Click CIC" },
+        { "name": "Intius 3 Click ITC", "correct": "Intuis™ 3 Click ITC" },
+        { "name": "Intius 3 RIC312", "correct": "Intuis™ 3 RIC312" },
+        { "name": "Intius 3 M", "correct": "Intuis™ 3 M" },
+        { "name": "Intius 3 P", "correct": "Intuis™ 3 P" },
+        { "name": "Intius 3 S", "correct": "Intuis™ 3 S" },
+        { "name": "Intius 3 SP", "correct": "Intuis™ 3 SP" },
         { "name": "Motion 13 Nx", "correct": "Motion™ 13 Nx" },
         { "name": "Motion 13P Nx", "correct": "Motion™ 13P Nx" },
         { "name": "Motion Charge&Go P X", "correct": "Motion™ Charge&Go P X" },
@@ -154,6 +164,9 @@
       "hearing care professionals": "Hearing Care Professionals"
     },
     "styles": ["BTE", "RIC", "ITE", "ITC", "CIC", "IIC", "RITE", "RTE"],
+    "trademarks": {
+      "Bluetooth": "Bluetooth®"
+    },
     "disclosures": {
       "bluetooth": "Bluetooth® word mark and logos are owned by the Bluetooth SIG, Inc. and any use of such marks by WSAUD A/S is under license.",
       "apple": "Apple, the Apple logo and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.",
