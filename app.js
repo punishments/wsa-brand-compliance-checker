@@ -299,6 +299,7 @@ analyzeContent() {
     this.displayResults();
 }
             
+
             applyCommonTerminologyFixes() {
                 // Fix common terminology
                 Object.entries(commonTerms.replacements).forEach(([incorrect, correct]) => {
@@ -388,6 +389,7 @@ analyzeContent() {
                     return `${appleTerm}${sep}${androidTerm}`;
                 });
             }
+
             
             applyBrandSpecificRules() {
                 const selectedBrands = this.getSelectedBrands();
@@ -707,6 +709,7 @@ addIssue(position, original, corrected, type, description) {
                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             }
         }
+
 
 // Fixed Glossary functionality with working search
 class GlossaryManager {
@@ -1034,3 +1037,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.bcChecker = new BrandComplianceChecker();
     new GlossaryManager();
 });
+

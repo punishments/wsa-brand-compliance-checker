@@ -14,8 +14,6 @@
         { "name": "Insio IX", "correct": "Insio™ IX" },
         { "name": "Insio IX IIC/CIC", "correct": "Insio IX IIC/CIC" },
         { "name": "Insio Nx", "correct": "Insio™ Nx" },
-        { "name": "Intuis", "correct": "Intuis™" },
-        { "name": "Intius", "correct": "Intuis™" },
         { "name": "Intuis 3 CIC", "correct": "Intuis™ 3 CIC" },
         { "name": "Intuis 3 ITC", "correct": "Intuis™ 3 ITC" },
         { "name": "Intuis 3 ITE", "correct": "Intuis™ 3 ITE" },
@@ -193,6 +191,7 @@
         "variants": ["made for iPhone", "made for iphone", "Made For iPhone"],
         "disclosure": "apple"
       }
+
     },
     "disclosures": {
       "bluetooth": "Bluetooth® word mark and logos are owned by the Bluetooth SIG, Inc. and any use of such marks by WSAUD A/S is under license.",
