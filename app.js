@@ -1,166 +1,6 @@
-        // Load brand rules from the actual nomenclature documents
-        const brandRules = {
-            signia: {
-                platforms: [
-                    { name: 'Signia Integrated Xperience', correct: 'Signia Integrated Xperience™' },
-                    { name: 'Signia Augmented Xperience', correct: 'Signia Augmented Xperience' },
-                    { name: 'Signia Xperience', correct: 'Signia Xperience' },
-                    { name: 'Signia Nx', correct: 'Signia Nx' }
-                ],
-                products: [
-                    { name: 'Active', correct: 'Active' },
-                    { name: 'Active Pro', correct: 'Active Pro' },
-                    { name: 'Insio Charge&Go AX', correct: 'Insio™ Charge&Go AX' },
-                    { name: 'Insio IX', correct: 'Insio™ IX' },
-                    { name: 'Insio IX IIC/CIC', correct: 'Insio IX IIC/CIC' },
-                    { name: 'Insio Nx', correct: 'Insio™ Nx' },
-                    { name: 'Intuis 3 CIC', correct: 'Intuis™ 3 CIC' },
-                    { name: 'Intuis 3 ITC', correct: 'Intuis™ 3 ITC' },
-                    { name: 'Intuis 3 ITE', correct: 'Intuis™ 3 ITE' },
-                    { name: 'Intuis 3 Click CIC', correct: 'Intuis™ 3 Click CIC' },
-                    { name: 'Intuis 3 Click ITC', correct: 'Intuis™ 3 Click ITC' },
-                    { name: 'Intuis 3 RIC312', correct: 'Intuis™ 3 RIC312' },
-                    { name: 'Intius 3 M', correct: 'Intius™ 3 M' },
-                    { name: 'Intius 3 P', correct: 'Intius™ 3 P' },
-                    { name: 'Intius 3 S', correct: 'Intius™ 3 S' },
-                    { name: 'Intius 3 SP', correct: 'Intius™ 3 SP' },
-                    { name: 'Motion 13 Nx', correct: 'Motion™ 13 Nx' },
-                    { name: 'Motion 13P Nx', correct: 'Motion™ 13P Nx' },
-                    { name: 'Motion Charge&Go P X', correct: 'Motion™ Charge&Go P X' },
-                    { name: 'Motion Charge&Go SP X', correct: 'Motion™ Charge&Go SP X' },
-                    { name: 'Motion Charge&Go X', correct: 'Motion™ Charge&Go X' },
-                    { name: 'Pure 312 AX', correct: 'Pure™ 312 AX' },
-                    { name: 'Pure 312 X', correct: 'Pure™ 312 X' },
-                    { name: 'Pure Charge&Go AX', correct: 'Pure™ Charge&Go AX' },
-                    { name: 'Pure Charge&Go IX', correct: 'Pure™ Charge&Go IX' },
-                    { name: 'Pure Charge&Go T AX', correct: 'Pure™ Charge&Go T AX' },
-                    { name: 'Pure Charge&Go T IX', correct: 'Pure™ Charge&Go T IX' },
-                    { name: 'Pure Charge&Go X', correct: 'Pure™ Charge&Go X' },
-                    { name: 'Silk Charge&Go IX', correct: 'Silk™ Charge&Go IX' },
-                    { name: 'Styletto AX', correct: 'Styletto™ AX' },
-                    { name: 'Styletto IX', correct: 'Styletto™ IX' },
-                    { name: 'Styletto X', correct: 'Styletto™ X' },
-                    { name: 'Silk X', correct: 'Silk™ X' }
-                ],
-                features: [
-                    { name: 'Augmented Focus', correct: 'Augmented Focus™' },
-                    { name: 'AutoFit', correct: 'AutoFit™' },
-                    { name: 'Connexx', correct: 'Connexx™' },
-                    { name: 'e2e Wireless', correct: 'e2e Wireless™' },
-                    { name: 'eWindScreen', correct: 'eWindScreen™' },
-                    { name: 'OVP', correct: 'OVP™' },
-                    { name: 'SoundSmoothing', correct: 'SoundSmoothing™' },
-                    { name: 'TruAcoustics', correct: 'TruAcoustics™' }
-                ],
-                phoneFormat: '(800) 766-4500',
-                disclosure: 'Signia is a registered trademark of WSAUD A/S.'
-            },
-            rexton: {
-                platforms: [
-                    { name: 'BiCore', correct: 'BiCore™' },
-                    { name: 'MotionCore', correct: 'MotionCore™' },
-                    { name: 'MyCore', correct: 'MyCore™' },
-                    { name: 'Reach', correct: 'Reach' },
-                    { name: 'TruCore', correct: 'TruCore' }
-                ],
-                products: [
-                    { name: 'BiCore B-Li M Rugged', correct: 'BiCore™ B-Li M Rugged' },
-                    { name: 'BiCore B M', correct: 'BiCore™ B M' },
-                    { name: 'BiCore B P', correct: 'BiCore™ B P' },
-                    { name: 'BiCore B HP', correct: 'BiCore™ B HP' },
-                    { name: 'BiCore C R-Li', correct: 'BiCore™ C R-Li' },
-                    { name: 'BiCore C R-Li T', correct: 'BiCore™ C R-Li T' },
-                    { name: 'BiCore Custom Li', correct: 'BiCore™ Custom Li' },
-                    { name: 'BiCore R-Li', correct: 'BiCore™ R-Li' },
-                    { name: 'BiCore R-Li T', correct: 'BiCore™ R-Li T' },
-                    { name: 'BiCore R312', correct: 'BiCore™ R312' },
-                    { name: 'BiCore SR', correct: 'BiCore™ SR' },
-                    { name: 'M-Core B-Li M', correct: 'M-Core™ B-Li M' },
-                    { name: 'M-Core B-Li P', correct: 'M-Core™ B-Li P' },
-                    { name: 'M-Core B-Li HP', correct: 'M-Core™ B-Li HP' },
-                    { name: 'M-Core iX-CIC', correct: 'M-Core™ iX-CIC' },
-                    { name: 'M-Core R-Li', correct: 'M-Core™ R-Li' },
-                    { name: 'M-Core R-Li T', correct: 'M-Core™ R-Li T' },
-                    { name: 'M-Core R312', correct: 'M-Core™ R312' },
-                    { name: 'M-Core SR', correct: 'M-Core™ SR' },
-                    { name: 'Mosaic HP 6C BTE', correct: 'Mosaic HP 6C BTE' },
-                    { name: 'Mosaic M 8C BTE', correct: 'Mosaic M 8C BTE' },
-                    { name: 'Mosaic P 8C BTE', correct: 'Mosaic P 8C BTE' },
-                    { name: 'Reach inoX-CIC Li', correct: 'Reach inoX-CIC Li' },
-                    { name: 'Reach R-Li T', correct: 'Reach R-Li T' },
-                    { name: 'Sterling 8C Customs', correct: 'Sterling 8C Customs' }
-                ],
-                features: [
-                    { name: 'AutoFit', correct: 'AutoFit™' },
-                    { name: 'Connexx', correct: 'Connexx™' },
-                    { name: 'Lifeproof', correct: 'Lifeproof™' },
-                    { name: 'SoundSmoothing', correct: 'SoundSmoothing™' }
-                ],
-                phoneFormat: '(800) 876-1141',
-                disclosure: 'Rexton is a registered trademark of WSAUD A/S.'
-            },
-            widex: {
-                products: [
-                    { name: 'Widex SmartRIC', correct: 'Widex SmartRIC™' },
-                    { name: 'SmartRIC', correct: 'SmartRIC™' },
-                    { name: 'Widex Moment Sheer', correct: 'Widex Moment Sheer™' },
-                    { name: 'Moment Sheer', correct: 'Moment Sheer™' },
-                    { name: 'Widex Moment', correct: 'Widex Moment™' },
-                    { name: 'Moment', correct: 'Moment™' },
-                    { name: 'Widex Magnify', correct: 'Widex Magnify' },
-                    { name: 'Magnify', correct: 'Magnify' },
-                    { name: 'Widex Evoke', correct: 'Widex Evoke™' },
-                    { name: 'Evoke', correct: 'Evoke™' },
-                    { name: 'Widex Allure', correct: 'Widex Allure™' },
-                    { name: 'Evoke', correct: 'Evoke™' }
-                ],
-                features: [
-                    { name: 'CAMISHA', correct: 'CAMISHA™' },
-                    { name: 'Compass GPS', correct: 'Compass™ GPS' },
-                    { name: 'Echo-Free', correct: 'Echo-Free™' },
-                    { name: 'NanoCare', correct: 'NanoCare™' },
-                    { name: 'PureSound', correct: 'PureSound™' },
-                    { name: 'SoundRelax', correct: 'SoundRelax™' },
-                    { name: 'TruAcoustics', correct: 'TruAcoustics™' },
-                    { name: 'WidexLink', correct: 'WidexLink™' },
-                    { name: 'ZeroDelay', correct: 'ZeroDelay™' }
-                ],
-                accessories: [
-                    { name: 'COM-DEX', correct: 'COM-DEX™' },
-                    { name: 'COM-DEX Remote Mic', correct: 'COM-DEX™ Remote Mic' },
-                    { name: 'PHONE-DEX 2', correct: 'PHONE-DEX™ 2' },
-                    { name: 'RC-DEX', correct: 'RC-DEX™' },
-                    { name: 'TV-DEX', correct: 'TV-DEX™' },
-                    { name: 'TV PLAY', correct: 'TV PLAY™' },
-                    { name: 'Widex Sound Assist', correct: 'Widex Sound Assist™' }
-                ],
-                phoneFormat: '1.800.221.0188',
-                disclosure: 'Widex is a registered trademark of WSAUD A/S.'
-            }
-        };
+let brandRules = {};
+let commonTerms = {};
 
-        const commonTerms = {
-            replacements: {
-                'patients': 'wearers',
-                'customers': 'wearers',
-                'clients': 'wearers',
-                'patient': 'wearer',
-                'customer': 'wearer',
-                'client': 'wearer'
-            },
-            capitalizations: {
-                'hcp': 'HCP',
-                'hcps': 'HCPs',
-                'hearing care professional': 'Hearing Care Professional',
-                'hearing care professionals': 'Hearing Care Professionals'
-            },
-            styles: ['BTE', 'RIC', 'ITE', 'ITC', 'CIC', 'IIC', 'RITE'],
-            disclosures: {
-                bluetooth: 'Bluetooth® word mark and logos are owned by the Bluetooth SIG, Inc. and any use of such marks by WSAUD A/S is under license.',
-                apple: 'Apple, the Apple logo and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.',
-                android: 'Android, Google Play and the Google Play logo are trademarks of Google Inc.'
-            }
-        };
 
         class BrandComplianceChecker {
             constructor() {
@@ -462,125 +302,90 @@ analyzeContent() {
             applyCommonTerminologyFixes() {
                 // Fix common terminology
                 Object.entries(commonTerms.replacements).forEach(([incorrect, correct]) => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(incorrect)}\\b`, 'gi');
+                    const regex = new RegExp(`\b${this.escapeRegex(incorrect)}\b`, 'gi');
+                    for (const match of this.originalText.matchAll(regex)) {
+                        this.addIssue(match.index, match[0], correct, 'terminology', `Use "${correct}" instead of "${match[0]}"`);
+                    }
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
-                
+
                 // Fix capitalization
                 Object.entries(commonTerms.capitalizations).forEach(([incorrect, correct]) => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(incorrect)}\\b`, 'gi');
+                    const regex = new RegExp(`\b${this.escapeRegex(incorrect)}\b`, 'gi');
+                    for (const match of this.originalText.matchAll(regex)) {
+                        this.addIssue(match.index, match[0], correct, 'capitalization', `Capitalize as "${correct}"`);
+                    }
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
             }
-            
             applyDisclosureRules() {
-                // Process Apple/iPhone FIRST (highest priority)
-                this.processAppleTerms();
-                
-                // Process iOS (no trademark symbols)
-                this.processiOSTerms();
-                
-                // Process Android LAST (with ™ symbol)
-                this.processAndroidTerms();
-                
-                // Process Bluetooth
-                this.processBluetoothTerms();
+                this.processTrademarkTerms();
+                this.enforceAppleOrder();
             }
             
-            processAppleTerms() {
-                // Handle iPhone variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const iPhoneVariants = ['iphone', 'Iphone', 'IPhone', 'IPHONE'];
-                let isFirstMention = !this.firstMentions.has('iphone');
-                
-                iPhoneVariants.forEach(variant => {
-                    // CRITICAL FIX: Negative lookahead to avoid matching terms that already have trademark symbols
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'iPhone®');
-                        this.firstMentions.add('iphone');
-                        this.requiredDisclosures.add('apple');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'iPhone');
-                    }
-                });
-                
-                // Handle Apple variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const appleVariants = ['apple', 'APPLE'];
-                let isFirstAppleMention = !this.firstMentions.has('apple');
-                
-                appleVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstAppleMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Apple®');
-                        this.firstMentions.add('apple');
-                        this.requiredDisclosures.add('apple');
-                        isFirstAppleMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Apple');
-                    }
-                });
-                
-                // Handle made-for-iPhone - FIXED: Only match terms WITHOUT existing trademark symbols
-                const madeForIPhoneVariants = ['made for iPhone', 'made for iphone', 'Made For iPhone'];
-                madeForIPhoneVariants.forEach(variant => {
-                    const regex = new RegExp(`${this.escapeRegex(variant)}(?![™®])`, 'gi');
-                    if (!this.firstMentions.has('made-for-iphone') && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'made-for-iPhone®');
-                        this.firstMentions.add('made-for-iphone');
-                        this.requiredDisclosures.add('apple');
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'made-for-iPhone');
-                    }
-                });
-            }
             
-            processiOSTerms() {
-                // iOS gets no trademark symbols but needs correct capitalization
-                const iOSVariants = ['ios', 'IOS', 'Ios'];
-                iOSVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b`, 'g');
-                    this.correctedText = this.correctedText.replace(regex, 'iOS');
-                });
-            }
-            
-            processAndroidTerms() {
-                // Handle Android variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const androidVariants = ['android', 'ANDROID'];
-                let isFirstMention = !this.firstMentions.has('android');
-                
-                androidVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Android™');
-                        this.firstMentions.add('android');
-                        this.requiredDisclosures.add('android');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Android');
+            processTrademarkTerms() {
+                const trademarks = commonTerms.trademarks || {};
+
+                Object.entries(trademarks).forEach(([key, data]) => {
+                    const info = typeof data === 'string' ? { correct: data, variants: [key], disclosure: key.toLowerCase() } : data;
+
+                    const correct = info.correct;
+                    const plain = correct.replace(/[™®]/g, '');
+                    const variants = info.variants || [key];
+                    const discloseKey = info.disclosure || key.toLowerCase();
+
+                    let isFirstMention = !this.firstMentions.has(key.toLowerCase());
+
+                    const lines = this.correctedText.split('\n');
+                    let issuePos = -1;
+                    let originalMatch = '';
+
+                    for (let i = 0; i < lines.length; i++) {
+                        let line = lines[i];
+
+                        if (this.isHeader(line, i, lines)) {
+                            variants.forEach(v => {
+                                const r = new RegExp(`\\b${this.escapeRegex(v)}\\b(?![™®])`, 'gi');
+                                line = line.replace(r, v);
+                            });
+                            lines[i] = line;
+                            continue;
+                        }
+
+                        variants.forEach(v => {
+                            const r = new RegExp(`\\b${this.escapeRegex(v)}\\b(?![™®])`, 'gi');
+                            line = line.replace(r, (match, offset) => {
+                                if (isFirstMention) {
+                                    const linesBefore = this.originalText.split('\n').slice(0, i);
+                                    const textBefore = linesBefore.join('\n') + (i > 0 ? '\n' : '');
+                                    issuePos = textBefore.length + offset;
+                                    originalMatch = match;
+                                    isFirstMention = false;
+                                    this.firstMentions.add(key.toLowerCase());
+                                    this.requiredDisclosures.add(discloseKey);
+                                    return correct;
+                                }
+                                return plain;
+                            });
+                        });
+
+                        lines[i] = line;
+                    }
+
+                    this.correctedText = lines.join('\n');
+
+                    if (issuePos !== -1) {
+                        this.addIssue(issuePos, originalMatch, correct, 'trademark', `Add trademark symbol: "${originalMatch}" → "${correct}"`);
                     }
                 });
             }
-            
-            processBluetoothTerms() {
-                // FIXED: Only match terms WITHOUT existing trademark symbols
-                const bluetoothVariants = ['bluetooth', 'Bluetooth', 'BLUETOOTH'];
-                let isFirstMention = !this.firstMentions.has('bluetooth');
-                
-                bluetoothVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Bluetooth®');
-                        this.firstMentions.add('bluetooth');
-                        this.requiredDisclosures.add('bluetooth');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Bluetooth');
-                    }
+
+            enforceAppleOrder() {
+                const pattern = /(Android(?:™)?)(\s*(?:,|and|or)\s*)(Apple(?:®)?|iPhone(?:®)?|iOS)/gi;
+                this.correctedText = this.correctedText.replace(pattern, (match, androidTerm, sep, appleTerm, offset) => {
+                    this.addIssue(offset, match, `${appleTerm}${sep}${androidTerm}`, 'style', 'Mention Apple devices before Android');
+                    return `${appleTerm}${sep}${androidTerm}`;
                 });
             }
             
@@ -681,25 +486,45 @@ processProductName(product, brand) {
             applyStyleCorrections() {
                 commonTerms.styles.forEach(style => {
                     const regex = new RegExp(`\\b${this.escapeRegex(style.toLowerCase())}\\b`, 'gi');
+                    for (const match of this.originalText.matchAll(regex)) {
+                        if (match[0] !== style) {
+                            this.addIssue(match.index, match[0], style, 'terminology', `Use "${style}" style`);
+                        }
+                    }
                     this.correctedText = this.correctedText.replace(regex, style);
                 });
-                
+
                 // Fix app to lowercase when used generically
                 const appRegex = /\bApp\b(?!\s+Store)/g;
+                for (const match of this.originalText.matchAll(appRegex)) {
+                    this.addIssue(match.index, match[0], 'app', 'terminology', 'Use "app" when generic');
+                }
                 this.correctedText = this.correctedText.replace(appRegex, 'app');
             }
-            
             applyPhoneNumberFormatting() {
-                const selectedBrands = this.getSelectedBrands();
-                
-                selectedBrands.forEach(brand => {
+                const brands = this.getSelectedBrands();
+                if (brands.length === 0) return;
+
+                brands.forEach(brand => {
                     const rules = brandRules[brand];
-                    if (rules.phoneFormat) {
-                        // This is a simplified phone number correction
-                        // In a real implementation, you'd want more sophisticated phone number detection
-                        const phoneRegex = /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g;
-                        // For demo purposes, we'll just flag phone numbers that don't match the expected format
+                    if (!rules.phoneFormat) return;
+
+                    const digitsExpected = rules.phoneFormat.replace(/\D/g, '');
+                    const genericRegex = digitsExpected.length === 11
+                        ? /\b1[-.\s]?\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g
+                        : /\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/g;
+
+                    for (const match of this.originalText.matchAll(genericRegex)) {
+                        const digitsFound = match[0].replace(/\D/g, '');
+                        if (digitsFound === digitsExpected && match[0] !== rules.phoneFormat) {
+                            this.addIssue(match.index, match[0], rules.phoneFormat, 'terminology', `Format phone as ${rules.phoneFormat}`);
+                        }
                     }
+
+                    this.correctedText = this.correctedText.replace(genericRegex, m => {
+                        const digitsFound = m.replace(/\D/g, '');
+                        return digitsFound === digitsExpected ? rules.phoneFormat : m;
+                    });
                 });
             }
             
@@ -882,11 +707,6 @@ addIssue(position, original, corrected, type, description) {
                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             }
         }
-        
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            new BrandComplianceChecker();
-        });
 
 // Fixed Glossary functionality with working search
 class GlossaryManager {
@@ -1191,7 +1011,26 @@ class GlossaryManager {
 }
 
 // Initialize glossary when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+
+async function loadRules() {
+    try {
+        const resp = await fetch('rules.json');
+        if (resp.ok) {
+            return await resp.json();
+        }
+    } catch (e) {
+        console.error('Failed to fetch rules.json:', e);
+    }
+
+    console.error('Failed to load rules data');
+    return { brandRules: {}, commonTerms: {} };
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const data = await loadRules();
+    brandRules = data.brandRules;
+    commonTerms = data.commonTerms;
+
+    window.bcChecker = new BrandComplianceChecker();
     new GlossaryManager();
 });
-
