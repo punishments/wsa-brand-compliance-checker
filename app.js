@@ -1,6 +1,7 @@
 let brandRules = {};
 let commonTerms = {};
 
+
         class BrandComplianceChecker {
             constructor() {
                 this.originalText = '';
@@ -318,110 +319,24 @@ analyzeContent() {
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
             }
-
             applyDisclosureRules() {
-                // Process Apple/iPhone FIRST (highest priority)
-                this.processAppleTerms();
-                
-                // Process iOS (no trademark symbols)
-                this.processiOSTerms();
-                
-                // Process Android LAST (with ™ symbol)
-                this.processAndroidTerms();
-
-                // Process trademarks from JSON (e.g., Bluetooth)
                 this.processTrademarkTerms();
-
-                // Ensure Apple references precede Android in sentences
                 this.enforceAppleOrder();
             }
-
             
-            processAppleTerms() {
-                // Handle iPhone variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const iPhoneVariants = ['iphone', 'Iphone', 'IPhone', 'IPHONE'];
-                let isFirstMention = !this.firstMentions.has('iphone');
-                
-                iPhoneVariants.forEach(variant => {
-                    // CRITICAL FIX: Negative lookahead to avoid matching terms that already have trademark symbols
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'iPhone®');
-                        this.firstMentions.add('iphone');
-                        this.requiredDisclosures.add('apple');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'iPhone');
-                    }
-                });
-                
-                // Handle Apple variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const appleVariants = ['apple', 'APPLE'];
-                let isFirstAppleMention = !this.firstMentions.has('apple');
-                
-                appleVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstAppleMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Apple®');
-                        this.firstMentions.add('apple');
-                        this.requiredDisclosures.add('apple');
-                        isFirstAppleMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Apple');
-                    }
-                });
-                
-                // Handle made-for-iPhone - FIXED: Only match terms WITHOUT existing trademark symbols
-                const madeForIPhoneVariants = ['made for iPhone', 'made for iphone', 'Made For iPhone'];
-                madeForIPhoneVariants.forEach(variant => {
-                    const regex = new RegExp(`${this.escapeRegex(variant)}(?![™®])`, 'gi');
-                    if (!this.firstMentions.has('made-for-iphone') && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'made-for-iPhone®');
-                        this.firstMentions.add('made-for-iphone');
-                        this.requiredDisclosures.add('apple');
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'made-for-iPhone');
-                    }
-                });
-            }
             
-            processiOSTerms() {
-                // iOS gets no trademark symbols but needs correct capitalization
-                const iOSVariants = ['ios', 'IOS', 'Ios'];
-                iOSVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b`, 'g');
-                    this.correctedText = this.correctedText.replace(regex, 'iOS');
-                });
-            }
-            
-            processAndroidTerms() {
-                // Handle Android variations - FIXED: Only match terms WITHOUT existing trademark symbols
-                const androidVariants = ['android', 'ANDROID'];
-                let isFirstMention = !this.firstMentions.has('android');
-                
-                androidVariants.forEach(variant => {
-                    const regex = new RegExp(`\\b${this.escapeRegex(variant)}\\b(?![™®])`, 'g');
-                    
-                    if (isFirstMention && this.correctedText.match(regex)) {
-                        this.correctedText = this.correctedText.replace(regex, 'Android™');
-                        this.firstMentions.add('android');
-                        this.requiredDisclosures.add('android');
-                        isFirstMention = false;
-                    } else {
-                        this.correctedText = this.correctedText.replace(regex, 'Android');
-                    }
-                });
-            }
-
-          
             processTrademarkTerms() {
                 const trademarks = commonTerms.trademarks || {};
 
-                Object.entries(trademarks).forEach(([term, correct]) => {
-                    const termLower = term.toLowerCase();
-                    let isFirstMention = !this.firstMentions.has(termLower);
+                Object.entries(trademarks).forEach(([key, data]) => {
+                    const info = typeof data === 'string' ? { correct: data, variants: [key], disclosure: key.toLowerCase() } : data;
+
+                    const correct = info.correct;
+                    const plain = correct.replace(/[™®]/g, '');
+                    const variants = info.variants || [key];
+                    const discloseKey = info.disclosure || key.toLowerCase();
+
+                    let isFirstMention = !this.firstMentions.has(key.toLowerCase());
 
                     const lines = this.correctedText.split('\n');
                     let issuePos = -1;
@@ -429,28 +344,34 @@ analyzeContent() {
 
                     for (let i = 0; i < lines.length; i++) {
                         let line = lines[i];
-                        const regex = new RegExp(`\\b${this.escapeRegex(term)}\\b(?![™®])`, 'i');
 
                         if (this.isHeader(line, i, lines)) {
-                            line = line.replace(regex, term);
+                            variants.forEach(v => {
+                                const r = new RegExp(`\\b${this.escapeRegex(v)}\\b(?![™®])`, 'gi');
+                                line = line.replace(r, v);
+                            });
                             lines[i] = line;
                             continue;
                         }
 
-                        const match = line.match(regex);
-                        if (match && isFirstMention) {
-                            lines[i] = line.replace(regex, correct);
-                            const linesBefore = this.originalText.split('\n').slice(0, i);
-                            const textBefore = linesBefore.join('\n') + (i > 0 ? '\n' : '');
-                            issuePos = textBefore.length + line.indexOf(match[0]);
-                            originalMatch = match[0];
-                            isFirstMention = false;
-                            this.firstMentions.add(termLower);
-                            this.requiredDisclosures.add(termLower);
-                            continue;
-                        }
+                        variants.forEach(v => {
+                            const r = new RegExp(`\\b${this.escapeRegex(v)}\\b(?![™®])`, 'gi');
+                            line = line.replace(r, (match, offset) => {
+                                if (isFirstMention) {
+                                    const linesBefore = this.originalText.split('\n').slice(0, i);
+                                    const textBefore = linesBefore.join('\n') + (i > 0 ? '\n' : '');
+                                    issuePos = textBefore.length + offset;
+                                    originalMatch = match;
+                                    isFirstMention = false;
+                                    this.firstMentions.add(key.toLowerCase());
+                                    this.requiredDisclosures.add(discloseKey);
+                                    return correct;
+                                }
+                                return plain;
+                            });
+                        });
 
-                        lines[i] = line.replace(regex, term);
+                        lines[i] = line;
                     }
 
                     this.correctedText = lines.join('\n');
@@ -468,6 +389,7 @@ analyzeContent() {
                     return `${appleTerm}${sep}${androidTerm}`;
                 });
             }
+
             
             applyBrandSpecificRules() {
                 const selectedBrands = this.getSelectedBrands();
@@ -607,7 +529,6 @@ processProductName(product, brand) {
                     });
                 });
             }
-
             
             getSelectedBrands() {
                 const brands = [];
@@ -1093,11 +1014,27 @@ class GlossaryManager {
 }
 
 // Initialize glossary when DOM is loaded
+
+async function loadRules() {
+    try {
+        const resp = await fetch('rules.json');
+        if (resp.ok) {
+            return await resp.json();
+        }
+    } catch (e) {
+        console.error('Failed to fetch rules.json:', e);
+    }
+
+    console.error('Failed to load rules data');
+    return { brandRules: {}, commonTerms: {} };
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-    const resp = await fetch('rules.json');
-    const data = await resp.json();
+    const data = await loadRules();
     brandRules = data.brandRules;
     commonTerms = data.commonTerms;
-    new BrandComplianceChecker();
+
+    window.bcChecker = new BrandComplianceChecker();
     new GlossaryManager();
 });
+

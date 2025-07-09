@@ -161,14 +161,37 @@
       "hcp": "HCP",
       "hcps": "HCPs",
       "hearing care professional": "Hearing Care Professional",
-      "hearing care professionals": "Hearing Care Professionals"
+      "hearing care professionals": "Hearing Care Professionals",
+      "ios": "iOS"
     },
     "styles": ["BTE", "RIC", "ITE", "ITC", "CIC", "IIC", "RITE", "RTE"],
     "trademarks": {
-      "Bluetooth": "Bluetooth®",
-      "Android": "Android™",
-      "Apple": "Apple®",
-      "iPhone": "iPhone®"
+      "Bluetooth": {
+        "correct": "Bluetooth®",
+        "variants": ["Bluetooth"],
+        "disclosure": "bluetooth"
+      },
+      "Android": {
+        "correct": "Android™",
+        "variants": ["android", "ANDROID"],
+        "disclosure": "android"
+      },
+      "Apple": {
+        "correct": "Apple®",
+        "variants": ["apple", "APPLE"],
+        "disclosure": "apple"
+      },
+      "iPhone": {
+        "correct": "iPhone®",
+        "variants": ["iphone", "Iphone", "IPHONE"],
+        "disclosure": "apple"
+      },
+      "made-for-iPhone": {
+        "correct": "made-for-iPhone®",
+        "variants": ["made for iPhone", "made for iphone", "Made For iPhone"],
+        "disclosure": "apple"
+      }
+
     },
     "disclosures": {
       "bluetooth": "Bluetooth® word mark and logos are owned by the Bluetooth SIG, Inc. and any use of such marks by WSAUD A/S is under license.",
