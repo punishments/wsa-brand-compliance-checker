@@ -1,7 +1,6 @@
 let brandRules = {};
 let commonTerms = {};
 
-
         class BrandComplianceChecker {
             constructor() {
                 this.originalText = '';
@@ -299,6 +298,7 @@ analyzeContent() {
     this.displayResults();
 }
             
+
             applyCommonTerminologyFixes() {
                 // Fix common terminology
                 Object.entries(commonTerms.replacements).forEach(([incorrect, correct]) => {
@@ -318,6 +318,7 @@ analyzeContent() {
                     this.correctedText = this.correctedText.replace(regex, correct);
                 });
             }
+
             applyDisclosureRules() {
                 // Process Apple/iPhone FIRST (highest priority)
                 this.processAppleTerms();
@@ -334,6 +335,7 @@ analyzeContent() {
                 // Ensure Apple references precede Android in sentences
                 this.enforceAppleOrder();
             }
+
             
             processAppleTerms() {
                 // Handle iPhone variations - FIXED: Only match terms WITHOUT existing trademark symbols
@@ -412,7 +414,8 @@ analyzeContent() {
                     }
                 });
             }
-            
+
+          
             processTrademarkTerms() {
                 const trademarks = commonTerms.trademarks || {};
 
@@ -579,10 +582,10 @@ processProductName(product, brand) {
                 this.correctedText = this.correctedText.replace(appRegex, 'app');
             }
             applyPhoneNumberFormatting() {
-                const selectedBrands = this.getSelectedBrands();
-                if (selectedBrands.length === 0) return;
+                const brands = this.getSelectedBrands();
+                if (brands.length === 0) return;
 
-                selectedBrands.forEach(brand => {
+                brands.forEach(brand => {
                     const rules = brandRules[brand];
                     if (!rules.phoneFormat) return;
 
@@ -785,6 +788,7 @@ addIssue(position, original, corrected, type, description) {
                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             }
         }
+
 
 // Fixed Glossary functionality with working search
 class GlossaryManager {
@@ -1089,7 +1093,6 @@ class GlossaryManager {
 }
 
 // Initialize glossary when DOM is loaded
-
 document.addEventListener('DOMContentLoaded', async () => {
     const resp = await fetch('rules.json');
     const data = await resp.json();
